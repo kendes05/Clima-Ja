@@ -5,11 +5,11 @@ import Footer from "./components/Footer";
 import ToggleItem from "./components/ToggleItem";
 
 const App = () => {
-  const [showCard, setShowCard] = useState(false);
+  const [city, setCity] = useState("");
   const [isDark, setIsDark] = useState(false);
 
-  const handleSearch = () => {
-    setShowCard(!showCard);
+  const handleSearch = (cityName) => {
+    setCity(cityName);
   };
 
   const toggleTheme = () => {
@@ -17,6 +17,15 @@ const App = () => {
   };
 
   useEffect(() => {
+    const storedTheme = localStorage.getItem("darkMode");
+    if (storedTheme === "true") {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", isDark);
     if (isDark) {
       document.documentElement.classList.add("dark");
     } else {
@@ -31,7 +40,7 @@ const App = () => {
         ClimaJá
       </h1>
       <SearchBar onSearch={handleSearch} />
-      <WeatherCard show={showCard} />
+      {city && <WeatherCard city={city} />}
       <Footer />
     </div>
   );
