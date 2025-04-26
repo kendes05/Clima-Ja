@@ -6,8 +6,9 @@ const FooterRecentItem = ({ recentsArray, onSearch }) => {
       {recentsArray.length > 0 &&
         recentsArray.map((city, index) => (
           <div
-            className="bg-zinc-100 w-min px-3 py-1 rounded-3xl mt-3 cursor-pointer hover:bg-zinc-300 dark:bg-slate-700 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out"
+            className="bg-zinc-100 w-min h-min px-3 py-1 rounded-3xl mt-3 cursor-pointer hover:bg-zinc-300 dark:bg-slate-700 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out"
             key={index}
+            onClick={(e) => onSearch(e.target.innerText)}
           >
             <p className="font-semibold dark:text-white">{city}</p>
           </div>

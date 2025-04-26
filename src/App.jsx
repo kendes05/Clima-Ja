@@ -10,7 +10,13 @@ const App = () => {
   const [recents, setRecents] = useState([]);
 
   const addRecentSearch = (cityName) => {
-    setRecents((prevRecents) => [...prevRecents, cityName]);
+    setRecents((prevRecents) => {
+      const newRecents = [...prevRecents, cityName];
+      if (newRecents.length > 4) {
+        newRecents.shift(); // remove o primeiro elemento
+      }
+      return newRecents;
+    });
   };
 
   const handleSearch = (cityName) => {
@@ -48,7 +54,7 @@ const App = () => {
   }, [isDark]);
 
   return (
-    <div className="w-full h-screen flex items-center flex-col transition-all duration-300 ease-in-out dark:bg-slate-950">
+    <div className="w-full min-h-screen flex items-center flex-col transition-all duration-300 ease-in-out dark:bg-slate-950">
       <ToggleItem isDark={isDark} onToggle={toggleTheme} />
       <h1 className="w-full text-center text-4xl font-bold py-8 dark:text-white">
         ClimaJá
