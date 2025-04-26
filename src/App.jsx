@@ -7,9 +7,23 @@ import ToggleItem from "./components/ToggleItem";
 const App = () => {
   const [city, setCity] = useState("");
   const [isDark, setIsDark] = useState(false);
+  const [recents, setRecents] = useState([]);
+
+  const addRecentSearch = (cityName) => {
+    setRecents((prevRecents) => [...prevRecents, cityName]);
+  };
 
   const handleSearch = (cityName) => {
     setCity(cityName);
+    addRecentSearch(cityName);
+  };
+
+  const handleSearchRecentItem = (cityName) => {
+    setCity(cityName);
+  };
+
+  const clearRecents = () => {
+    setRecents([]);
   };
 
   const toggleTheme = () => {
@@ -41,7 +55,11 @@ const App = () => {
       </h1>
       <SearchBar onSearch={handleSearch} />
       {city && <WeatherCard city={city} />}
-      <Footer />
+      <Footer
+        recentsArray={recents}
+        onSearch={handleSearchRecentItem}
+        clearRecents={clearRecents}
+      />
     </div>
   );
 };
