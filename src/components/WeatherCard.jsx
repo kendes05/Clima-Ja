@@ -19,18 +19,23 @@ const WeatherCard = ({ city }) => {
     const fetchWeather = async () => {
       try {
         const apiKey = "60a5356cc4568340637786bbbe824e19";
+
+        setShowCard(false);
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        setShowCard(true);
+
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=pt_br`
         );
 
         if (!response.ok) {
-          setShowCard(true); // Lança um erro se o status não for 2xx
           throw new Error("Cidade não encontrada");
         }
 
         const data = await response.json();
         setWeather(data);
-        setShowCard(true);
         setError(null);
       } catch (error) {
         setError(error.message);

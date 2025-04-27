@@ -7,17 +7,24 @@ import ToggleItem from "./components/ToggleItem";
 const App = () => {
   const [city, setCity] = useState("");
   const [isDark, setIsDark] = useState(false);
-  const [recents, setRecents] = useState([]);
+  const [recents, setRecents] = useState(() => {
+    const saved = localStorage.getItem("recents");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const addRecentSearch = (cityName) => {
     setRecents((prevRecents) => {
       const newRecents = [...prevRecents, cityName];
       if (newRecents.length > 4) {
-        newRecents.shift(); // remove o primeiro elemento
+        newRecents.shift();
       }
       return newRecents;
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem("recents", JSON.stringify(recents));
+  }, [recents]);
 
   const handleSearch = (cityName) => {
     setCity(cityName);
